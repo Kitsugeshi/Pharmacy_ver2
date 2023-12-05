@@ -1,0 +1,41 @@
+﻿<Window x:Class="Pharmacy.View.CartWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pharmacy.View"
+        mc:Ignorable="d"
+        Title="CartWin" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Button Command="{Binding Back}" Content="Back" FontSize="20"/>
+        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+            <ListBox ItemsSource="{Binding DrugList}" 
+                     SelectedItem="{Binding ChosenD}"
+                     Height="331" Width="752" Margin="0, 5, 0, 8">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <DockPanel Width="752">
+                <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Чек:" Width="40" FontSize="15"/>
+                    <TextBlock Name="Chek" FontSize="15" Text="{Binding FullCost}" Width="158" VerticalAlignment="Center"/>
+                </WrapPanel>
+                <Button Margin="385, 0, 0, 0" Width="169" Content="Give the product" FontSize="20"/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</Window>
