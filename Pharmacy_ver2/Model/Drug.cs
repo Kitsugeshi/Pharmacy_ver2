@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pharmacy
 {
-    internal class Drug : PChanged
+    public class Drug : PChanged
     {
         private string? _name;
         private int _cost;
