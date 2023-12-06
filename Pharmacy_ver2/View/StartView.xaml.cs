@@ -10,21 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Pharmacy.ViewModel;
 
-namespace Pharmacy.View
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Логика взаимодействия для StoreWin.xaml
+    /// Логика взаимодействия для StartView.xaml
     /// </summary>
-    public partial class StoreWin : Window
+    public partial class StartView : UserControl
     {
-        public StoreWin()
+        public StartView()
         {
             InitializeComponent();
-
-            DataContext = new StoreWinVM();
         }
     }
 }

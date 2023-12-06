@@ -1,11 +1,11 @@
-﻿<Window x:Class="Pharmacy.View.StoreWin"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Pharmacy.View"
-        mc:Ignorable="d"
-        Title="StoreWin" Height="450" Width="800">
+﻿<UserControl x:Class="Pharmacy_ver2.View.StoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pharmacy_ver2.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -55,14 +55,15 @@
                             <Label Content="Симтомы:"/>
                             <TextBlock Name="TSym" VerticalAlignment="Center" Text="{Binding ChosenD.Symptoms}"/>
                         </WrapPanel>
+                        <Button Content="More Details" HorizontalAlignment="Left" Width="80" Height="30" VerticalAlignment="Top" Margin="10,5,0,0"/>
                     </StackPanel>
-                    
+
                     <DockPanel Height="30" VerticalAlignment="Bottom">
                         <Button FontSize="20" Content="Order" Width="200"/>
-                        <Button Command="{Binding OpenCart}" FontSize="20" Content="Cart"/>
+                        <Button Command="{Binding AddToCart}" FontSize="20" Content="Cart"/>
                     </DockPanel>
                 </StackPanel>
             </DockPanel>
         </DockPanel>
     </Grid>
-</Window>
+</UserControl>

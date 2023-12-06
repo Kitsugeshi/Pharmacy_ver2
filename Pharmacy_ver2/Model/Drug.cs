@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pharmacy
+namespace Pharmacy_ver2
 {
-    internal class Drug : PChanged
+    public class Drug : PChanged
     {
         private string? _name;
         private int _cost;
