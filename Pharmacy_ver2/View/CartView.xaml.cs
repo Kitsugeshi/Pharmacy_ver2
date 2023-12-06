@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Pharmacy_ver2.ViewModel;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,16 +11,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Pharmacy.View
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Логика взаимодействия для CartWin.xaml
+    /// Логика взаимодействия для CartView.xaml
     /// </summary>
-    public partial class CartWin : Window
+    public partial class CartView : UserControl
     {
-        public CartWin()
+        public CartView()
         {
             InitializeComponent();
 

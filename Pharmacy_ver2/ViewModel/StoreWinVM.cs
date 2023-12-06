@@ -1,5 +1,5 @@
-﻿using Pharmacy;
-using Pharmacy.View;
+﻿using Pharmacy_ver2.DataContext;
+using Pharmacy_ver2.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Pharmacy.ViewModel
+namespace Pharmacy_ver2.ViewModel
 {
     class StoreWinVM : PChanged
     {
@@ -22,18 +22,18 @@ namespace Pharmacy.ViewModel
             set { _drugList = value; OnPropertyChanged(nameof(DrugList)); }
         }
 
-        private Drug chosenD;
+        private Drug? chosenD;
         public Drug ChosenD
         {
-            get => chosenD;
+            get => chosenD!;
             set { chosenD = value; OnPropertyChanged(nameof(ChosenD)); }
         }
 
-        private ObservableCollection<string> _symptoms = new ObservableCollection<string>();
-        public ObservableCollection<string> Symptoms
+        private ObservableCollection<Drug>? _cartList;
+        public ObservableCollection<Drug> CartList
         {
-            get => _symptoms;
-            set { _symptoms = value; OnPropertyChanged(nameof(Symptoms)); }
+            get { return _cartList!; }
+            set { _cartList = value; OnPropertyChanged(nameof(DrugList)); }
         }
 
         private ObservableCollection<Drug> _sortedList = new ObservableCollection<Drug>();
@@ -44,26 +44,9 @@ namespace Pharmacy.ViewModel
         }
         public StoreWinVM()
         {
-            DrugList = new ObservableCollection<Drug>
-            {
-                new Drug("МедоЛеч", 10, "Нет", "головная боль, насморк"),
-                new Drug("КардиоКлин", 25, "Да", "боли в области сердца, головокружение"),
-                new Drug("ИммуноГард", 15, "Нет", "ослабленный иммунитет, простуда"),
-                new Drug("АнтиГрипекс", 12, "Нет", "нервное напряжение, бессонница"),
-                new Drug("СпокоПрин", 30, "Да", "грипп, высокая температура"),
-                new Drug("ЛегкоДыш", 18, "Нет", "затрудненное дыхание, кашель"),
-                new Drug("АнтиАллерг", 22, "Нет", "аллергия, зуд"),
-                new Drug("ПроБиотик", 28, "Нет", "нарушение микрофлоры, желудочные боли"),
-                new Drug("ГемоСтоп", 35, "Да", "кровотечение, анемия"),
-                new Drug("АнтиРевм", 40, "Да", "ревматизм"),
-                new Drug("Вита-Энергия", 15, "Нет", "общая слабость, усталость"),
-                new Drug("ОстеоФлекс", 32, "Да", "заболевания костей, заболевания суставов"),
-                new Drug("ГастроКомфорт", 20, "Нет", "гастрит, изжога"),
-                new Drug("Лекарь", 25, "Нет", "лихорадка, слабость"),
-                new Drug("СпасиБол", 38, "Да", "сильные боли, воспаление")
-            };
-
+            DrugList = LocatorControl.dataDrug.DrugList;
             SortedList = DrugList;
+            CartList = LocatorControl.dataDrug.CartDrugList;
         }
 
         RelayCommand? _back;
@@ -74,25 +57,63 @@ namespace Pharmacy.ViewModel
                 return _back! ??
                     (_back = new RelayCommand(obj =>
                     {
-
+                        LocatorControl.viewPage.CurrentView.Content = new StartView();
                     }
                     ));
             }
         }
 
-        RelayCommand? _openCart;
-        public RelayCommand OpenCart
+        RelayCommand? _addToCart;
+        public RelayCommand AddToCart
         {
             get
             {
-                return _openCart! ??
-                    (_openCart = new RelayCommand(obj =>
+                return _addToCart! ??
+                    (_addToCart = new RelayCommand(obj =>
                     {
-                        CartWin cartWin = new CartWin();
-                        if (cartWin.ShowDialog() == true)
+                        int cost = 0;
+                        bool flag = true;
+                        LocatorControl.dataDrug.FullCost = "";
+                        if (CartList.Count != 0)
                         {
-                            
+                            foreach (var drug in CartList)
+                            {
+                                if (drug.Name == ChosenD.Name)
+                                {
+                                    ChosenD.Count--;
+                                    drug.Count++;
+                                    flag = false;
+                                }
+                            }
+                            if (flag)
+                            {
+                                ChosenD.Count--;
+                                CartList.Add(new Drug(ChosenD));
+                                CartList.Last().Count = 1;
+                            }       
                         }
+                        else
+                        {
+                            ChosenD.Count--;
+                            CartList.Add(new Drug(ChosenD));
+                            CartList[0].Count = 1;
+                        }
+
+                        if (ChosenD.Count < 5)
+                        {
+                            ChosenD.Count += 35;
+                        }
+
+                        foreach (var drug in CartList)
+                        {
+                            if (drug.Count == 1)  
+                                cost += drug.Cost;
+                            else
+                            {
+                                cost += drug.Cost * drug.Count;
+                            }
+                        }
+                        LocatorControl.dataDrug.FullCost = cost.ToString() + " долларов";
                     }
                     ));
             }
@@ -127,6 +148,25 @@ namespace Pharmacy.ViewModel
                             SortedList = List;
                         }
                         else SortedList = DrugList;
+                    }
+                    ));
+            }
+        }
+
+        private RelayCommand? _addNew;
+        public RelayCommand AddNew
+        {
+            get
+            {
+                return _addNew! ??
+                    (_addNew = new RelayCommand(obj =>
+                    {
+                        NewDrug drug = new NewDrug();
+                        if (drug.ShowDialog() != true)
+                        {
+                            
+                        }
+                        //drug.ShowDialog();
                     }
                     ));
             }

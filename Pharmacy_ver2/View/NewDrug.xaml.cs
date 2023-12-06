@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy_ver2.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +12,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Pharmacy.ViewModel;
 
-namespace Pharmacy.View
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Логика взаимодействия для StoreWin.xaml
+    /// Логика взаимодействия для NewDrug.xaml
     /// </summary>
-    public partial class StoreWin : Window
+    public partial class NewDrug : Window
     {
-        public StoreWin()
+        public NewDrug()
         {
             InitializeComponent();
 
-            DataContext = new StoreWinVM();
+            DataContext = new NewDrugVM();
         }
     }
 }
