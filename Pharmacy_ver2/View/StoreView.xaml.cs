@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy_ver2.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,21 +13,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Pharmacy_ver2.ViewModel;
-using Pharmacy_ver2.DataContext;
 
-namespace Pharmacy
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для StoreView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StoreView : UserControl
     {
-        public MainWindow()
+        public StoreView()
         {
             InitializeComponent();
-            DataContext = new MainWinVM();
-            ContentCon.Content = LocatorControl.viewPage.CurrentView;
+
+            DataContext = new StoreWinVM();
         }
     }
 }

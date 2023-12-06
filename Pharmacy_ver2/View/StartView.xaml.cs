@@ -12,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Pharmacy_ver2.ViewModel;
-using Pharmacy_ver2.DataContext;
 
-namespace Pharmacy
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для StartView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class StartView : UserControl
     {
-        public MainWindow()
+        public StartView()
         {
             InitializeComponent();
-            DataContext = new MainWinVM();
-            ContentCon.Content = LocatorControl.viewPage.CurrentView;
         }
     }
 }

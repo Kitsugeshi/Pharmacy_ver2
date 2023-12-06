@@ -5,24 +5,135 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pharmacy"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="0,0,0,31">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        Title="MainWindow" Height="650" Width="800"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="Text_Style"
+            TargetType="TextBlock">
 
-        <TextBlock FontSize="50" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">Pharmacy</TextBlock>
-        <DockPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Height="50" VerticalAlignment="Bottom">
-            <Button Command="{Binding OpenStore}" Content="Store" FontSize="30" Width="242" Height="50" Margin="11,0,10,0"/>
-            <Button Content="Cart" FontSize="30" Width="242" Height="50" Margin="8,0,10,0"/>
-            <Button Content="Exit" FontSize="30" Height="50" Width="242" Margin="0,0,5,0"/>
-        </DockPanel>
-    </Grid>
+            <Setter Property="FontFamily"
+                Value="/Fonts/#Rubik"/>
+            <Setter Property="VerticalAlignment"
+                Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                Value="Left"/>
+            <Setter Property="Foreground"
+                Value="#DBDBDB"/>
+            <Setter Property="FontSize"
+                Value="18"/>
+
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#006603"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="border"
+                    Height="50"
+                    Width="228"
+                    BorderThickness="0">
+
+                            <Border.Background>
+                                <SolidColorBrush x:Name="BorderBackground"
+                                     Color="#8be88e" />
+                            </Border.Background>
+
+                            <Grid>
+
+                                <Border x:Name="Indicator"
+                                    Height="35"
+                                    Width="4"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="#FFFFFF"
+                                    Visibility="Collapsed"
+                                    CornerRadius="2" />
+
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+
+                            </Grid>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                         Value="True">
+
+                                <Setter Property="Visibility"
+                            TargetName="Indicator"
+                            Value="Visible" />
+
+                            </Trigger>
+
+                            <EventTrigger RoutedEvent="Border.MouseEnter"
+                              SourceName="border">
+
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="BorderBackground"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#8be88e"
+                                            To="#3E434A"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </EventTrigger>
+
+                            <EventTrigger RoutedEvent="Border.MouseLeave"
+                              SourceName="border">
+
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="BorderBackground"
+                                            Storyboard.TargetProperty="Color"
+                                            From="#3E434A"
+                                            To="#8be88e"
+                                            Duration="0:0:0.3" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+
+                            </EventTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="#edfaf1"
+        CornerRadius="20">
+        <Grid Margin="0,0,0,31">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Style="{StaticResource Text_Style}" FontSize="50" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">Pharmacy</TextBlock>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <ContentControl Name="ContentCon"/>
+            </Grid>
+            <DockPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Height="50" VerticalAlignment="Bottom">
+                <Button Command="{Binding OpenView}" CommandParameter="store" Content="Store" FontSize="30" Width="242" Height="50" Margin="15,0,10,0" />
+                <Button Command="{Binding OpenView}" CommandParameter="cart" Content="Cart" FontSize="30" Width="242" Height="50" Margin="8,0,10,0"/>
+                <Button Command="{Binding OpenView}" CommandParameter="exit" Content="Exit" FontSize="30" Height="50" Width="242" Margin="0,0,5,0"/>
+            </DockPanel>
+        </Grid>
+    </Border>
 </Window>
