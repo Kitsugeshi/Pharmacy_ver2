@@ -1,63 +1,90 @@
-﻿using System;
+﻿using Pharmacy_ver2.DataContext;
+using Pharmacy_ver2.View;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Input;
 
-namespace Pharmacy
+namespace Pharmacy_ver2
 {
     class CartWinVM : PChanged
     {
-        private ObservableCollection<Drug>? _drugList;
+        private ObservableCollection<Drug>? drugList = LocatorControl.dataDrug.CartDrugList;
         public ObservableCollection<Drug> DrugList
         {
-            get { return _drugList!; }
-            set { _drugList = value; OnPropertyChanged(nameof(DrugList)); }
+            get => drugList!;
+            set { drugList = value; OnPropertyChanged(nameof(DrugList)); }
         }
-        private Drug chosenD;
+        private Drug? chosenD;
         public Drug ChosenD
         {
-            get => chosenD;
+            get => chosenD!;
             set { chosenD = value; OnPropertyChanged(nameof(ChosenD)); }
         }
 
-        private string _fullCost;
-        public string FullCost 
-        { 
-            get => _fullCost;
-            set { _fullCost = value; OnPropertyChanged(nameof(FullCost)); }
+        private string? _cost = LocatorControl.dataDrug.FullCost;
+        public string Cost
+        {
+            get => _cost!;
+            set { _cost = value; OnPropertyChanged(nameof(Cost)); }
         }
 
-        public CartWinVM() 
-        { 
-            DrugList = new ObservableCollection<Drug>
+        RelayCommand? _back;
+        public RelayCommand Back
+        {
+            get
             {
-                new Drug("МедоЛеч", 10, "Нет", "головная боль, насморк"),
-                new Drug("КардиоКлин", 25, "Да", "боли в области сердца, головокружение"),
-                new Drug("ИммуноГард", 15, "Нет", "ослабленный иммунитет, простуда"),
-                new Drug("АнтиГрипекс", 12, "Нет", "нервное напряжение, бессонница"),
-                new Drug("СпокоПрин", 30, "Да", "грипп, высокая температура"),
-                new Drug("ЛегкоДыш", 18, "Нет", "затрудненное дыхание, кашель"),
-                new Drug("АнтиАллерг", 22, "Нет", "аллергия, зуд"),
-                new Drug("ПроБиотик", 28, "Нет", "нарушение микрофлоры, желудочные боли"),
-                new Drug("ГемоСтоп", 35, "Да", "кровотечение, анемия"),
-                new Drug("АнтиРевм", 40, "Да", "ревматизм"),
-                new Drug("Вита-Энергия", 15, "Нет", "общая слабость, усталость"),
-                new Drug("ОстеоФлекс", 32, "Да", "заболевания костей, заболевания суставов"),
-                new Drug("ГастроКомфорт", 20, "Нет", "гастрит, изжога"),
-                new Drug("Лекарь", 25, "Нет", "лихорадка, слабость"),
-                new Drug("СпасиБол", 38, "Да", "сильные боли, воспаление")
-            };
-
-            int cost = 0;
-            foreach (var drug in DrugList)
-            {
-                cost += drug.Cost;
+                return _back! ??
+                    (_back = new RelayCommand(obj =>
+                    {
+                        LocatorControl.viewPage.CurrentView.Content = new StartView();
+                    }
+                    ));
             }
-            FullCost = cost.ToString() + " долларов";
         }
 
-        
+        RelayCommand? _delete;
+        public RelayCommand Delete
+        {
+            get
+            {
+                return _delete! ??
+                    (_delete = new RelayCommand(obj =>
+                    {
+                        string[] text = Cost.Split(' ');
+                        int num = Convert.ToInt32(text[0]);
+                        if (ChosenD.Count == 1)
+                        {
+                            num -= ChosenD.Cost;
+                            LocatorControl.dataDrug.FullCost = num.ToString() + " долларов";
+                            Cost = LocatorControl.dataDrug.FullCost;
+                            foreach (var drug in LocatorControl.dataDrug.DrugList)
+                            {
+                                if (drug.Name == ChosenD.Name)
+                                    drug.Count++;
+                            }
+                            DrugList.Remove(ChosenD);
+                        }
+                        else
+                        {
+                            num -= ChosenD.Cost;
+                            LocatorControl.dataDrug.FullCost = num.ToString() + " долларов";
+                            Cost = LocatorControl.dataDrug.FullCost;
+                            ChosenD.Count--;
+                            foreach (var drug in LocatorControl.dataDrug.DrugList)
+                            {
+                                if (drug.Name == ChosenD.Name)
+                                    drug.Count++;
+                            }
+                        }
+                    }
+                    ));
+            }
+        }
     }
 }
