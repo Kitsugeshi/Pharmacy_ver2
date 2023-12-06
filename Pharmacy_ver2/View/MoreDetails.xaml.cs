@@ -10,23 +10,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Pharmacy_ver2.ViewModel;
-using Pharmacy_ver2.DataContext;
+using Pharmacy_ver2.ViewModel; 
 
-namespace Pharmacy
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для MoreDetails.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MoreDetails : Window
     {
-        public MainWindow()
+        public MoreDetails(Drug chosenD)
         {
             InitializeComponent();
-            DataContext = new MainWinVM();
-            ContentCon.Content = LocatorControl.viewPage.CurrentView;
+
+            DataContext = new MDVM(chosenD);
         }
     }
 }

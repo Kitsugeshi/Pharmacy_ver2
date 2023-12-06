@@ -11,20 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Pharmacy.ViewModel;
+using Pharmacy_ver2.ViewModel;
 
-namespace Pharmacy.View
+namespace Pharmacy_ver2.View
 {
     /// <summary>
-    /// Логика взаимодействия для StoreWin.xaml
+    /// Логика взаимодействия для EditDrug.xaml
     /// </summary>
-    public partial class StoreWin : Window
+    public partial class EditDrug : Window
     {
-        public StoreWin()
+        public EditDrug(Drug chosenD)
         {
             InitializeComponent();
 
-            DataContext = new StoreWinVM();
+            DataContext = new EditDrugVM(chosenD);
         }
     }
 }
