@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace Pharmacy
+namespace Pharmacy_ver2
 {
-    internal class Drug : PChanged
+    public class Drug : PChanged
     {
         private string? _name;
         private int _cost;
+        private int _count;
         private string? _isPrescription;
         private string? _symptomList;
 
@@ -18,6 +20,11 @@ namespace Pharmacy
         {
             get { return _name!; }
             set { _name = value; OnPropertyChanged(nameof(Name)); }
+        }
+        public int Count
+        {
+            get { return _count; }
+            set { _count = value; OnPropertyChanged(nameof(Count)); }
         }
         public int Cost
         {
@@ -35,12 +42,22 @@ namespace Pharmacy
             set { _symptomList = value; OnPropertyChanged(nameof(Symptoms)); }
         }
 
-        public Drug(string name, int cost, string isPre, string symptoms)
+        public Drug(string name, int count, int cost, string isPre, string symptoms)
         {
             Name = name;
+            Count = count;
             Cost = cost;
             IsPrescription = isPre;
             Symptoms = symptoms;
+        }
+
+        public Drug(Drug obj)
+        {
+            Name = obj.Name;
+            Count = obj.Count;
+            Cost = obj.Cost;
+            IsPrescription = obj.IsPrescription;
+            Symptoms = obj.Symptoms;
         }
     }
 }
